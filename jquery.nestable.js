@@ -40,6 +40,7 @@
             emptyClass      : 'dd-empty',
             expandBtnHTML   : '<button data-action="expand" type="button">Expand</button>',
             collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
+            deleteBtnHTML : '<button data-action="delete" type="button">Delete</button>',
             group           : 0,
             maxDepth        : 5,
             threshold       : 20
@@ -66,6 +67,7 @@
             list.placeEl = $('<div class="' + list.options.placeClass + '"/>');
 
             $.each(this.el.find(list.options.itemNodeName), function(k, el) {
+                list.addBtndeleteItem($(el));
                 list.setParent($(el));
             });
 
@@ -82,6 +84,9 @@
                 if (action === 'expand') {
                     list.expandItem(item);
                 }
+                if (action === 'delete') {
+					list.deleteItem(item);
+				}
             });
 
             var onStartEvent = function(e)
@@ -194,8 +199,39 @@
             this.dragDepth  = 0;
             this.hasNewRoot = false;
             this.pointEl    = null;
-        },
+        },	
+        addBtndeleteItem: function(li)
+	    {
+		    li.prepend($(this.options.deleteBtnHTML));
+    	},
+    	deleteItem: function(li)
+    	{
+			var parent = li.parent();
+			li.remove();
+			this.unsetAfterDeleteItemSetParent(parent);
+			this.updateOutput(this.el);
 
+    	},
+    	 updateOutput : function(e)
+    	{
+			var list   = e.length ? e : $(e.target),
+			output = list.data('output');
+			if (window.JSON) {
+					output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+			} else {
+					output.val('JSON browser support required for this demo.');
+			}
+    	},		
+    	unsetAfterDeleteItemSetParent: function(parent)
+		{
+
+			if (parent.children().length == 0 ) {
+				parent.parent().children('[data-action]:not(button[data-action=delete])').remove();
+				parent.parent().removeClass(this.options.collapsedClass);
+				parent.parent().children(this.options.listNodeName).remove();
+
+			}
+		},
         expandItem: function(li)
         {
             li.removeClass(this.options.collapsedClass);
