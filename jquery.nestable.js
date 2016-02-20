@@ -40,7 +40,7 @@
             emptyClass      : 'dd-empty',
             expandBtnHTML   : '<button data-action="expand" type="button">Expand</button>',
             collapseBtnHTML : '<button data-action="collapse" type="button">Collapse</button>',
-			deleteBtnHTML : '<button data-action="delete" type="button">Delete</button>',
+	    deleteBtnHTML : '<button data-action="delete" type="button">Delete</button>',
             group           : 0,
             maxDepth        : 5,
             threshold       : 20
