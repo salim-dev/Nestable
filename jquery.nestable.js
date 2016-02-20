@@ -224,16 +224,16 @@
     					output.val('JSON browser support required for this demo.');
     			}
     	},
-		unsetAfterDeleteItemSetParent: function(parent)
-		{
+	unsetAfterDeleteItemSetParent: function(parent)
+	{
 
-			if (parent.children().length == 0 ) {
-				parent.parent().children('[data-action]:not(button[data-action=delete])').remove();
-				parent.parent().removeClass(this.options.collapsedClass);
-				parent.parent().children(this.options.listNodeName).remove();
+		if (parent.children().length == 0 ) {
+			parent.parent().children('[data-action]:not(button[data-action=delete])').remove();
+			parent.parent().removeClass(this.options.collapsedClass);
+			parent.parent().children(this.options.listNodeName).remove();
 
-			}
-		},
+		}
+	},
         expandItem: function(li)
         {
             li.removeClass(this.options.collapsedClass);
@@ -281,7 +281,7 @@
         unsetParent: function(li)
         {
             li.removeClass(this.options.collapsedClass);
-            li.children('[data-action]').remove();
+            li.children('[data-action]:not(button[data-action=delete])'').remove();
             li.children(this.options.listNodeName).remove();
         },
 
