@@ -233,6 +233,9 @@
 			parent.parent().children(this.options.listNodeName).remove();
 
 		}
+	        if (this.el.children().length == 0) {
+                 this.el.append('<div class="' + this.options.emptyClass + '"/>');
+               }
 	},
         expandItem: function(li)
         {
